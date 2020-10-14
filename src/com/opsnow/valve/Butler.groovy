@@ -298,12 +298,12 @@ def helm_init() {
     old_version()
 
     sh """
-        helm init --upgrade && \
+        helm init --upgrade --force-upgrade && \
         helm version
     """
 
     if (chartmuseum) {
-        sh "helm repo add chartmuseum https://$chartmuseum"
+        sh "helm repo add chartmuseum $chartmuseum"
     }
 
     sh """
