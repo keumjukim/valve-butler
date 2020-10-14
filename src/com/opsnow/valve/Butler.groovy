@@ -303,7 +303,7 @@ def helm_init() {
     """
 
     if (chartmuseum) {
-        sh "helm repo add chartmuseum $chartmuseum"
+        sh "helm repo add chartmuseum https://$chartmuseum"
     }
 
     sh """
