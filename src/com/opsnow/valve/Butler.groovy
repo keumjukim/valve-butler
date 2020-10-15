@@ -142,7 +142,7 @@ def env_namespace(namespace = "") {
     }
 
     // check namespace
-    count = sh(script: "kubectl get ns $namespace 2>&1 | grep Active | wc -l", returnStdout: true).trim()
+    count = sh(script: "kubectl get ns $namespace | grep Active | wc -l", returnStdout: true).trim()
     echo "active namespace($namespace) count: $count"
     if ("$count" == "0") {
         sh "kubectl create namespace $namespace"
