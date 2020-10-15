@@ -112,10 +112,10 @@ def env_cluster(cluster = "", namespace = "devops") {
         return
     }
 
-    /*sh """
+    sh """
         rm -rf $home/.kube &&
         mkdir -p $home/.kube
-    """*/
+    """
 
     // check cluster secret
     count = sh(script: "kubectl get secret -n $namespace | grep 'kube-config-$cluster' | wc -l", returnStdout: true).trim()
@@ -123,11 +123,10 @@ def env_cluster(cluster = "", namespace = "devops") {
         throw new RuntimeException("cluster is null.")
     }
 
-    /*sh """
+    sh """
         kubectl get secret kube-config-$cluster -n $namespace -o json | jq -r .data.text | base64 -d > $home/.kube/config && \
         kubectl config current-context
-    """*/
-
+    """
 
     // check current context
     count = sh(script: "kubectl config current-context | grep '$cluster' | wc -l", returnStdout: true).trim()
@@ -142,8 +141,8 @@ def env_namespace(namespace = "") {
         throw new RuntimeException("namespace is null.")
     }
 
-    context = sh(script: "kubectl config current-context", returnStdout: true).trim()
-    echo "current-context: $context"
+    //context = sh(script: "kubectl config current-context", returnStdout: true).trim()
+    //echo "current-context: $context"
 
     // check namespace
     count = sh(script: "kubectl get namespace | grep Active | grep $namespace | wc -l", returnStdout: true).trim()
@@ -341,7 +340,7 @@ def helm_install(name = "", version = "", namespace = "", base_domain = "", clus
     }
 
     // env cluster
-    env_cluster(cluster)
+    //env_cluster(cluster)
 
     // env namespace
     env_namespace(namespace)
