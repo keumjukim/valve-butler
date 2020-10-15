@@ -166,7 +166,7 @@ def env_config(type = "", name = "", namespace = "") {
         throw new RuntimeException("namespace is null.")
     }
 
-    ssh """
+    sh """
         cat $home/.kube/config
     """
     // check config
