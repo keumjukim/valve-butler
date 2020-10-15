@@ -143,16 +143,9 @@ def env_namespace(namespace = "") {
 
     context = sh(script: "kubectl config current-context", returnStdout: true).trim()
     echo "current-context: $context"
-    if ("$context" == "") {
-        echo "$home/.kube/config does not exist!!!"
-        sh """
-            kubectl get secret kube-config-$cluster -n $namespace -o json | jq -r .data.text | base64 -d > $home/.kube/config && \
-            kubectl config current-context
-        """
-    }
 
     // check namespace
-    count = sh(script: "kubectl get ns $namespace | grep Active | wc -l", returnStdout: true).trim()
+    count = sh(script: "kubectl get namespace | grep Active | grep $namespace | wc -l", returnStdout: true).trim()
     echo "active namespace($namespace) count: $count"
     if ("$count" == "0") {
         sh "kubectl create namespace $namespace"
