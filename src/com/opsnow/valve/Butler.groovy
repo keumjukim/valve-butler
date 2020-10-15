@@ -145,11 +145,11 @@ def env_namespace(namespace = "") {
     echo "current-context: $context"
 
     // check namespace
-    /*count = sh(script: "kubectl get namespace | grep Active | grep $namespace | wc -l", returnStdout: true).trim()
+    count = sh(script: "kubectl get namespace | grep Active | grep $namespace | wc -l", returnStdout: true).trim()
     echo "active namespace($namespace) count: $count"
     if ("$count" == "0") {
         sh "kubectl create namespace $namespace"
-    }*/
+    }
 }
 
 def env_config(type = "", name = "", namespace = "") {
@@ -166,6 +166,9 @@ def env_config(type = "", name = "", namespace = "") {
         throw new RuntimeException("namespace is null.")
     }
 
+    ssh """
+        cat $home/.kube/config
+    """
     // check config
     count = sh(script: "kubectl get $type -n $namespace | grep \"$name-$namespace \" | wc -l", returnStdout: true).trim()
     if ("$count" == "0") {
@@ -343,7 +346,7 @@ def helm_install(name = "", version = "", namespace = "", base_domain = "", clus
     env_cluster(cluster)
 
     // env namespace
-    env_namespace(namespace)
+    //env_namespace(namespace)
 
     // config (secret, configmap)
     configmap = env_config("configmap", name, namespace)
@@ -352,6 +355,7 @@ def helm_install(name = "", version = "", namespace = "", base_domain = "", clus
     // helm init
     helm_init()
 
+    echo "............"
     // latest version
     if (version == "latest") {
         version = sh(script: "helm search chartmuseum/$name | grep $name | head -1 | awk '{print \$2}'", returnStdout: true).trim()
