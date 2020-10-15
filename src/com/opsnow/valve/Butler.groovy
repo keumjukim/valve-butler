@@ -112,10 +112,10 @@ def env_cluster(cluster = "", namespace = "devops") {
         return
     }
 
-    sh """
+    /*sh """
         rm -rf $home/.kube &&
         mkdir -p $home/.kube
-    """
+    """*/
 
     // check cluster secret
     count = sh(script: "kubectl get secret -n $namespace | grep 'kube-config-$cluster' | wc -l", returnStdout: true).trim()
@@ -340,7 +340,7 @@ def helm_install(name = "", version = "", namespace = "", base_domain = "", clus
     }
 
     // env cluster
-    //env_cluster(cluster)
+    env_cluster(cluster)
 
     // env namespace
     env_namespace(namespace)
