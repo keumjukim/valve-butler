@@ -145,11 +145,11 @@ def env_namespace(namespace = "") {
     echo "current-context: $context"
 
     // check namespace
-    count = sh(script: "kubectl get namespace | grep Active | grep $namespace | wc -l", returnStdout: true).trim()
+    /*count = sh(script: "kubectl get namespace | grep Active | grep $namespace | wc -l", returnStdout: true).trim()
     echo "active namespace($namespace) count: $count"
     if ("$count" == "0") {
         sh "kubectl create namespace $namespace"
-    }
+    }*/
 }
 
 def env_config(type = "", name = "", namespace = "") {
