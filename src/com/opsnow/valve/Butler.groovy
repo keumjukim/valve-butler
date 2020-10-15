@@ -340,7 +340,7 @@ def helm_install(name = "", version = "", namespace = "", base_domain = "", clus
     }
 
     // env cluster
-    env_cluster(cluster)
+    //env_cluster(cluster)
 
     // env namespace
     env_namespace(namespace)
