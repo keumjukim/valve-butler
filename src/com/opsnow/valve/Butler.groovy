@@ -166,9 +166,6 @@ def env_config(type = "", name = "", namespace = "") {
         throw new RuntimeException("namespace is null.")
     }
 
-    sh """
-        cat $home/.kube/config
-    """
     // check config
     count = sh(script: "kubectl get $type -n $namespace | grep \"$name-$namespace \" | wc -l", returnStdout: true).trim()
     if ("$count" == "0") {
@@ -346,7 +343,7 @@ def helm_install(name = "", version = "", namespace = "", base_domain = "", clus
     env_cluster(cluster)
 
     // env namespace
-    //env_namespace(namespace)
+    env_namespace(namespace)
 
     // config (secret, configmap)
     configmap = env_config("configmap", name, namespace)
