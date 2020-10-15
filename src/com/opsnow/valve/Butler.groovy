@@ -105,6 +105,8 @@ def scan_langusge(target = "", source_lang = "") {
 }
 
 def env_cluster(cluster = "", namespace = "devops") {
+    echo "----- env_cluster -----"
+    /*
     old_version()
 
     if (!cluster) {
@@ -133,6 +135,7 @@ def env_cluster(cluster = "", namespace = "devops") {
     if ("$count" == "0") {
         throw new RuntimeException("current-context is not match.")
     }
+    */
 }
 
 def env_namespace(namespace = "") {
